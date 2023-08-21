@@ -1,0 +1,43 @@
+<div style={{ margin: "10px"}} key={props.data[0].title}>
+            <h1>User : {userPosts[0].userId}</h1>
+            {userPosts.map(post =>
+               <div key={post.id} style={{border: "2px solid black"}}>
+                    <h1>Post-Id :{post.id}</h1>
+                    <h1>Post-Title :{post.title}</h1>
+                    <h1>Post-Body :{post.body}</h1>
+                   
+                    {/* <button onClick={handleClickUpdate} id={post.id}>Update</button> */}
+                    <button onClick={handleClickDelete} id={post.id}>Delete</button>
+
+                    <button onClick={handleEdit} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id={post.id}>Edit</button>
+
+                    {/* modal */}
+                    <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h1 className="modal-title fs-5" id="exampleModalLabel">Id: {modalId}</h1>
+                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div className="modal-body">
+                <form>
+                     <div className="mb-3">
+                        <label for="recipient-name" className="col-form-label">Title:</label>
+                        <input type="text" className="form-control" id="recipient-name" value={modalTitle} onChange={changeTitle}></input>
+                    </div>
+                    <div className="mb-3">
+                    <label for="message-text" className="col-form-label">Body:</label>
+                        <textarea className="form-control" id="message-text" value={modalBody} onChange={changeBody}></textarea>
+                    </div>
+                    </form>
+                </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" className="btn btn-primary" onClick={handleClickUpdate} id={modalId} data-bs-dismiss="modal">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+               </div>
+            )}   
+            </div>
