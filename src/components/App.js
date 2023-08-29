@@ -41,28 +41,34 @@ function App() {
     );
     const arr = [];
     arr.push(ans)
+
     newData(oldArray => [...oldArray, arr]);
+    window.alert("album added")
   }
 
   // deleting post
   const deletePost = (id) => { 
     var arr = [];
-
     //copying all arrays of albumsWise to arr
     albumWise.map(ele => {
       arr.push(ele);
     })
 
+  
     // deleting the post from arr's inner array 
     for(let i=0; i<arr.length; i++){
       for(let j=0; j<arr[i].length; j++){
-        if(arr[i][j].id == id){
-          // console.log(arr[i][j].id)
-          delete arr[i][j]
+        if(arr[i][j]){
+          if(arr[i][j].id == id){ 
+            delete arr[i][j]
+          }
         }
       }
     }
 
+  
+
+    // console.log(arr)
     //updating the state of  albumWise data
     newAlbum(arr);
 
@@ -74,27 +80,32 @@ function App() {
     var arr = [];
 
     //copying all arrays of albumsWise to arr
-    albumWise.map(ele => {
+    data.map(ele => {
       arr.push(ele);
     })
 
+    console.log(data)
     // deleting the post from arr's inner array 
     for(let i=0; i<arr.length; i++){
       for(let j=0; j<arr[i].length; j++){
-        if(arr[i][j].id == id){
+        if(arr[i][j]){
+          if(arr[i][j].id == id){
           
-          arr[i][j].title = title
-          arr[i][j].body = body
+            arr[i][j].title = title
+            arr[i][j].body = body
 
+          }
         }
       }
     }
 
+    console.log(arr)
     //updating the state of  albumWise data
     newAlbum(arr);
 
     //finally updating the data state which will be used by User Component
-    newData(albumWise)
+    // newData(albumWise)
+    newData(oldArray => [...oldArray]);
   }
 
   useEffect(() => {
@@ -103,6 +114,7 @@ function App() {
       const response = await fetch('https://jsonplaceholder.typicode.com/posts')
       const responseJson = await response.json();
 
+
       for(let i=0; i<responseJson.length; i += 10){
         let singleAlbum = []
         singleAlbum = responseJson.slice(i,[i + 10])
@@ -110,9 +122,12 @@ function App() {
       }
       newAlbum(albums);
       newData(albums);
+      
     })();
 
   },[])
+
+  
 
   return (
     <>
@@ -125,17 +140,16 @@ function App() {
         <input className='form-control me-5' style={{width: "200px", display: "inline" }} type="text" onChange={handleChangeBody} value={albumBody}></input>
         <button className='bg-success btn text-light' onClick={addAlbum}>Add Post</button>
 
-
         {data.map(data =>
+        
         <><User
             data={data}
-            key={data.id} 
+            key={data[0]} 
             delete={deletePost}
             update={updatePost}
           />
         </>
       )}
-      
       </div>
       
     </>
